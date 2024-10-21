@@ -16,8 +16,7 @@ btn.forEach((btnn) => {
 // to clear the display screen of calculator;
 const clear = document.querySelector("#clear");
 clear.onclick = () => {
-  display.value = "";
-  display.classList.remove("error", "result");
+  clearDisplay();
   stack.length = 0;
 };
 
@@ -36,6 +35,11 @@ cross.addEventListener("click", () => {
   clearDisplay();
   if (flag != 2) {
     display.value = tempVal.slice(0, tempVal.length - 1);
+    if (tempVal[tempVal.length - 1] === "(") {
+      stack.pop();
+    } else if (tempVal[tempVal.length - 1] === ")") {
+      stack.push("(");
+    }
   }
 });
 
@@ -45,7 +49,8 @@ braces.addEventListener("click", () => {
   if (flag != 0) {
     display.classList.remove("result", "error");
     if (flag == 2) {
-      display.value == "";
+      display.value = "";
+      flag = 0;
     }
   }
   const lastChr = display.value[display.value.length - 1];
@@ -65,6 +70,7 @@ braces.addEventListener("click", () => {
     }
     stack.push("(");
   }
+
   //stack is not empty and display is also not empty
   else {
     if (optrs.includes(lastChr) || lastChr == "(") {
@@ -75,6 +81,7 @@ braces.addEventListener("click", () => {
       display.value += ")";
     }
   }
+  console.log(stack);
 });
 
 // functions
@@ -89,7 +96,6 @@ function appendToDisplay(input) {
     clearDisplay();
     if (flag === 1 && optrs.includes(input)) {
       display.value = tempVal;
-      5;
     }
   }
   display.value += input;
@@ -112,7 +118,7 @@ function calculate() {
     display.classList.add("result");
     flag = 1;
   } catch (e) {
-    display.value = "";
+    display.value = ""; //to clear display.
     display.classList.add("error");
     console.log(display.classList);
     display.value += `syntax error`;
