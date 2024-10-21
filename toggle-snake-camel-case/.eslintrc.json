@@ -1,0 +1,27 @@
+{
+  "extends": "eslint:recommended",
+  "rules": {
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "no-console": "off",
+    "comma-dangle": ["error", "never"],
+    "one-var": "off",
+    "indent": ["error", 4],
+    "space-infix-ops": ["error"],
+    "strict": ["error", "global"]
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "console": true,
+    "Promise": true
+  }
+}

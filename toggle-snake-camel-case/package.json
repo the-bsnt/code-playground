@@ -1,0 +1,41 @@
+{
+  "name": "toggle-snake-camel-case",
+  "displayName": "toggle-snake-camel-case",
+  "description": "Toggle the identifier's case between snake_case and camelCase (and viceversa) by simply placing the cursor within it.",
+  "version": "0.0.1",
+  "publisher": "the_bsnt",
+  "engines": {
+    "vscode": "^1.24.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:toggle-snake-camel-case.ToggleSnakeCamelCase"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "toggle-snake-camel-case.ToggleSnakeCamelCase",
+        "title": "Toggle Snake Camel Case"
+      }
+    ],
+    "keybindings": {
+      "key": "Ctrl+I",
+      "command": "toggle-snake-camel-case.ToggleSnakeCamelCase",
+      "when": "editorTextFocus"
+    }
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "eslint": "^9.8.0",
+    "vscode": "^1.1.6"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "fast-xml-parser": "^4.4.1"
+  }
+}
