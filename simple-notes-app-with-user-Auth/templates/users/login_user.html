@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Log in</title> {% endblock %}
+{% block content %}
+
+<div class="go-back-dashboard ">
+    {% if user.is_authenticated %}
+    <a href="{% url 'notes:dashboard' %}" class="link-font normal-btn green">
+        Dashboard
+    </a>
+    {% endif %}
+</div>
+<div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="popup-message {% if message.tags %}{{ message.tags }}{% endif %}" id="popup-msg">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="form-container">
+    <div class="form-title">Log in</div>
+    <div>New User ? <a href="{% url 'users:register_user' %}">Register Now</a></div>
+    <form action="{% url 'users:login_user' %}" method="post">
+        {% csrf_token %}
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {{ form.password.label_tag }}
+        <div class="password-group">
+            {{ form.password }}
+            <span class="toggle-password" onclick="togglePassword()">
+                <i class="far fa-eye"></i>
+            </span>
+        </div>
+        <button class="normal-btn button-position">Log in</button>
+    </form>
+</div>
+{% endblock %}

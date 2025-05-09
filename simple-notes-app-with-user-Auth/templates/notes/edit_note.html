@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Create Note</title> {% endblock %}
+{% block content %}
+<div class="form-container">
+    <h1 class="link-font">Edit Note</h1>
+    <form action="{% url 'notes:edit_note' id %}" method="post">
+        {% csrf_token %}
+        <!-- Non-field errors -->
+        {% if form.non_field_errors %}
+        <div class="form-error">
+            {{ form.non_field_errors }}
+        </div>zx
+        {% endif %}
+        {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% for error in field.errors %}
+        <div class="form-error">{{ error }}</div>
+        {% endfor %}
+        {% endfor %}
+        <div class="note-footer">
+            <a href="{% url 'notes:dashboard' %}" class="normal-btn link-font">
+                Cancel
+            </a>
+            <button type="submit" class="normal-btn green">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

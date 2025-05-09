@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}<title>User Registration</title>{% endblock %}
+
+{% block content %}
+<div class="go-back-dashboard ">
+    {% if user.is_authenticated %}
+    <a href="{% url 'notes:dashboard' %}" class="link-font normal-btn green">
+        Dashboard
+    </a>
+    {% endif %}
+</div>
+<div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="popup-message {% if message.tags %}{{ message.tags }}{% endif %}" id="popup-msg">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="form-container">
+    <div class="form-title">Register New User</div>
+
+    <div class="form-link">
+        Already have an account? <a href="{% url 'users:login_user' %}">Log in</a>
+    </div>
+
+    <form action="{% url 'users:register_user' %}" method="post">
+        {% csrf_token %}
+
+        <!-- Non-field errors -->
+        {% if form.non_field_errors %}
+        <div class="form-error">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+
+        <!-- Loop through form fields -->
+        {% for field in form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% if field.help_text %}
+            <div class="form-help">{{ field.help_text }}</div>
+            {% endif %}
+
+            {% for error in field.errors %}
+            <div class="form-error">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="normal-btn button-position">Sign Up</button>
+    </form>
+</div>
+{% endblock %}

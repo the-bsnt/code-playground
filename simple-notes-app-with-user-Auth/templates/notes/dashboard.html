@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} <title>Dashboard</title> {% endblock %}
+{% block content %}
+
+<body>
+    <nav class="nav-bar">
+        <div class="logo">My Dashboard</div>
+        <div class="nav-links">
+            <a href="{% url 'users:login_user' %}"><button class="normal-btn">Log In</button></a>
+            <a href="{% url 'users:register_user' %}"><button class="normal-btn green">Register</button></a>
+            <a href="{% url 'users:logout_user' %}"><button class="normal-btn red">Log Out</button></a>
+        </div>
+    </nav>
+    <!-- notes content area  -->
+    <main class="content-area">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="popup-message {% if message.tags %}{{ message.tags }}{% endif %}" id="popup-msg">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="note-author">
+            <span>Welcome {{ user }}. Here are your notes!</span>
+        </div>
+        <div class="notes-container">
+            {% for note in user.notes_set.all %}
+            <div class="note-card">
+                <h2 class="note-title">{{ note.note_title }}</h2>
+                <p class="note-body">{{ note.note_body }}</p>
+                <div class="note-footer">
+                    <span class="note-date">{{ note.pub_date }}</span>
+                    <a href="{% url 'notes:edit_note' note.id %}"><button class="note_btns">Edit</button></a>
+                    <a href="{% url 'notes:delete_note' note.id %}"><button class="note_btns red">Delete</button></a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-notes">No notes available.</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'notes:create_note' %}"><button class="normal-btn green">Create Note</button></a>
+    </main>
+</body>
+{% endblock %}
